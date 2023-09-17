@@ -1,7 +1,8 @@
 const LOC_SAV = 'feedback-form-state';
+import throttle from 'lodash.throttle';
 
 const form = document.querySelector('.feedback-form');
-form.addEventListener('input', checkInput);
+form.addEventListener('input', throttle(checkEvent, 500));
 form.addEventListener('submit', checkButton);
 
 let email = '';
@@ -19,7 +20,7 @@ function autoForm(data) {
 }
 autoForm(form);
 
-function checkInput(event) {
+function checkEvent(event) {
   const typeInput = event.srcElement.nodeName;
   typeInput === 'INPUT'
     ? (email = event.target.value)
@@ -32,9 +33,12 @@ function checkButton(event) {
   if (obj.email != '' && obj.msg != '') {
     localStorage.setItem(LOC_SAV, JSON.stringify(obj));
   }
-  console.log(`localStorage: ${localStorage.getItem(LOC_SAV)}
-Email: ${obj.email}
-Message: ${obj.msg}
-  `);
+  console.log(
+    `
+    localStorage: ${localStorage.getItem(LOC_SAV)}
+    Email: ${obj.email}
+    Message: ${obj.msg}
+    `
+  );
   event.currentTarget.reset();
 }
