@@ -17,6 +17,20 @@ player.on(
   }, 1000)
 );
 
+const savedTime = Number(localStorage.getItem(CUR_TIME));
+
+player
+  .setCurrentTime(savedTime)
+  .then(function (seconds) {})
+  .catch(function (error) {
+    switch (error.name) {
+      case 'RangeError':
+        break;
+      default:
+        break;
+    }
+  });
+
 function clearLocalStorage() {
   localStorage.removeItem(CUR_TIME);
 }
