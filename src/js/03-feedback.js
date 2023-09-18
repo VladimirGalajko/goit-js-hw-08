@@ -5,9 +5,9 @@ const form = document.querySelector('.feedback-form');
 form.addEventListener('input', throttle(checkEvent, 500));
 form.addEventListener('submit', checkButton);
 
-let email = '';
 let msg = '';
-
+let email = '';
+autoForm(form);
 function autoForm(data) {
   let dataStor = localStorage.getItem(LOC_SAV);
   if (dataStor != null) {
@@ -18,21 +18,26 @@ function autoForm(data) {
     msg = dataStor.msg;
   }
 }
-autoForm(form);
 
+
+const  obj = {email,msg};
 function checkEvent(event) {
-  const typeInput = event.srcElement.nodeName;
-  typeInput === 'INPUT'
-    ? (email = event.target.value)
-    : (msg = event.target.value);
+  const typeInput = event.target.name;
+console.log(event.target)
+  if (typeInput === 'email') {  
+    obj.email = event.target.value;
+    localStorage.setItem(LOC_SAV, JSON.stringify(obj));
+  }
+  if (typeInput === 'message') {    
+    obj.msg = event.target.value;
+    localStorage.setItem(LOC_SAV, JSON.stringify(obj));
+
+  }
+  console.log(`email: ${obj.email }, msg: ${obj.msg } `);  
 }
 
 function checkButton(event) {
   event.preventDefault();
-  const obj = { email, msg };
-  if (obj.email != '' && obj.msg != '') {
-    localStorage.setItem(LOC_SAV, JSON.stringify(obj));
-  }
   console.log(
     `
     localStorage: ${localStorage.getItem(LOC_SAV)}
