@@ -19,31 +19,24 @@ function autoForm(data) {
   }
 }
 
-
-const  obj = {email,msg};
+let obj = { email, msg };
 function checkEvent(event) {
   const typeInput = event.target.name;
-console.log(event.target)
-  if (typeInput === 'email') {  
+
+  if (typeInput === 'email') {
     obj.email = event.target.value;
     localStorage.setItem(LOC_SAV, JSON.stringify(obj));
   }
-  if (typeInput === 'message') {    
+  if (typeInput === 'message') {
     obj.msg = event.target.value;
     localStorage.setItem(LOC_SAV, JSON.stringify(obj));
-
   }
-  console.log(`email: ${obj.email }, msg: ${obj.msg } `);  
 }
 
 function checkButton(event) {
   event.preventDefault();
-  console.log(
-    `
-    localStorage: ${localStorage.getItem(LOC_SAV)}
-    Email: ${obj.email}
-    Message: ${obj.msg}
-    `
-  );
+  console.log(obj);
+  obj = { email:'', msg: ''}
+  localStorage.removeItem(LOC_SAV)
   event.currentTarget.reset();
 }
